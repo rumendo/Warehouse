@@ -1,4 +1,5 @@
 #include <cstring>
+#include <cmath>
 #include "Date.h"
 
 Date::Date() {
@@ -8,16 +9,10 @@ Date::Date() {
 Date::Date(const char _date[11]) {
     strcpy(date, _date);
 
-    timestamp += (_date[0] - '0') * 10000000;
-    timestamp += (_date[1] - '0') * 1000000;
-    timestamp += (_date[2] - '0') * 100000;
-    timestamp += (_date[3] - '0') * 10000;
-
-    timestamp += (_date[5] - '0') * 1000;
-    timestamp += (_date[6] - '0') * 100;
-
-    timestamp += (_date[8] - '0') * 10;
-    timestamp += (_date[9] - '0');
+    for(int i=0, j=0; i<10; i++, j++)
+        if(_date[i]!='/')
+            timestamp += (_date[i] - '0') * pow(10, 7 - j);
+        else j--;
 }
 
 Date::Date(Date *_Date) {

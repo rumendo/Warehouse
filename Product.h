@@ -28,7 +28,14 @@ private:
 public:
     Product(string, char*, char*, string, string, float, float, string);
 
+    // Prints readable product data to standard output.
     void printInfo();
+
+    // Constructs CSV formatted string based on product data.
+    string getCSV();
+    string getName();
+    Date getExpiryDate();
+    void addQuantity(float);
 };
 
 
