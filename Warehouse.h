@@ -13,18 +13,23 @@ private:
     string fileName;
 
 public:
-//    Warehouse();
-//    void loadProduct(uint16_t , string, char*, char*, string, string, float, float, string);
 
+    // Adds products and saves a reference to them given the following rules:
+    // A new product with a different expiration date that an already existing one is placed in a different location.
+    // Products with matching names and expiration dates are placed in the same location if possible.
     void addProduct(string, char*, char*, string, string, float, float, string);
 
     // Saves all products to a file with given name.
     void saveProducts(string);
     void saveProducts();
+
     // Loads products from given file path.
     void loadProducts(string);
 
+    // Prints information for all products.
     void printInfo();
+
+    // Prints location of loaded products as a matrix of pointers. Use for testing.
     void printStorage();
 
 };

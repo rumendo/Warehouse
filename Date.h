@@ -9,12 +9,15 @@ private:
     char date[11];
     uint32_t timestamp = 0;
 public:
-    Date();
+    Date()= default;
     Date(const char[11]);
     Date(Date*);
 
-    void getDate(char*); // Fills date in a char array.
-    uint32_t getTimestamp(); // Returns date is following format: yyyymmdd.
+    // Fills date in a char array.
+    void getDate(char*);
+
+    // Returns date is following format: yyyymmdd as integer.
+    uint32_t getTimestamp();
 
     uint16_t getYear();
     uint8_t getMonth();

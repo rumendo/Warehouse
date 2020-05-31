@@ -2,10 +2,6 @@
 #include <cmath>
 #include "Date.h"
 
-Date::Date() {
-
-}
-
 Date::Date(const char _date[11]) {
     strcpy(date, _date);
 

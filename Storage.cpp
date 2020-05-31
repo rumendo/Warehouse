@@ -24,17 +24,12 @@ void Storage::printStorage() {
 
 uint8_t Storage::addProduct(Product *product, char *placement, uint8_t findNewPlace) {
     uint16_t shelf_number = 0;
-
-
-
-    for(auto &shelf : shelfs) {
+        for(auto &shelf : shelfs) {
         uint8_t row_number = 0;
 
         for(auto &row : shelf) {
-//            if(row != nullptr && row->getExpiryDateTimestamp() != product->getExpiryDateTimestamp())
-//                printf("%.2f\n", row->getQuantity());
-
             if ((findNewPlace && row == nullptr ) || (row != nullptr && row->getExpiryDateTimestamp() != product->getExpiryDateTimestamp() )) {
+
                 string place;
                 if(shelf_number<10) {
                     place = "00" + to_string(shelf_number) + '/' + to_string(row_number);
@@ -43,9 +38,7 @@ uint8_t Storage::addProduct(Product *product, char *placement, uint8_t findNewPl
                 }else
                     place = to_string(shelf_number) + '/' + to_string(row_number);
 
-
                 strcpy(placement, place.c_str());
-//                printf("%s\n", placement);
                 return 2;
             }
 
@@ -54,7 +47,6 @@ uint8_t Storage::addProduct(Product *product, char *placement, uint8_t findNewPl
             if(row != nullptr) {
 
                 if (row->getQuantity() <= MAX_ROW_CAPACITY && row->getName() == product->getName() && row->getExpiryDateTimestamp() == product->getExpiryDateTimestamp()) {
-                    cout << "once"<< endl;
                     float availableRowCapacity = MAX_ROW_CAPACITY - row->getQuantity();
 
                     if (availableRowCapacity >= product->getQuantity()) {
@@ -63,10 +55,9 @@ uint8_t Storage::addProduct(Product *product, char *placement, uint8_t findNewPl
                     }
 
                     float leftover = product->getQuantity() - availableRowCapacity;
-
                     row->addQuantity(availableRowCapacity);
                     product->setQuantity(leftover);
-//                    printf("%f\n", product->getQuantity());
+
                     return 1;
                 }
             }
