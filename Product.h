@@ -22,11 +22,18 @@ private:
     string measurementUnit;
     float quantity;
     float price;
-//    vector<float> placement;
+    char placement[6] = "\0";
     string description;
 
 public:
+    // Used for loading objects from file.
+    Product(uint16_t, string, char*, char*, string, string, float, float, char*, string);
+
+    // Used for adding a new object.
     Product(string, char*, char*, string, string, float, float, string);
+
+    // Used for adding a new object placed in a different location.
+    Product(string, char*, char*, string, string, float, float, char*, string);
 
     // Prints readable product data to standard output.
     void printInfo();
@@ -34,8 +41,11 @@ public:
     // Constructs CSV formatted string based on product data.
     string getCSV();
     string getName();
-    Date getExpiryDate();
+    uint32_t getExpiryDateTimestamp();
+    float getQuantity();
+    void setQuantity(float);
     void addQuantity(float);
+    void setPlacement(char*);
 };
 
 

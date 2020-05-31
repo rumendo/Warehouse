@@ -3,14 +3,19 @@
 
 
 #include "Product.h"
+#include "Storage.h"
 
 
 class Warehouse {
 private:
+    Storage storage;
     vector<Product> products;
     string fileName;
 
 public:
+//    Warehouse();
+//    void loadProduct(uint16_t , string, char*, char*, string, string, float, float, string);
+
     void addProduct(string, char*, char*, string, string, float, float, string);
 
     // Saves all products to a file with given name.
@@ -20,6 +25,7 @@ public:
     void loadProducts(string);
 
     void printInfo();
+    void printStorage();
 
 };
 
