@@ -20,18 +20,6 @@ void Date::getDate(char _date[11]) {
     strcpy(_date, date);
 }
 
-uint16_t Date::getYear() {
-    return timestamp/10000 % 10000;
-}
-
-uint8_t Date::getMonth() {
-    return timestamp/100 % 100;
-}
-
-uint8_t Date::getDay() {
-    return timestamp % 100 - 1;
-}
-
 int8_t Date::compare(Date comparedDate) {
     if(this->timestamp > comparedDate.timestamp)
         return 1;

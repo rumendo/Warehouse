@@ -114,3 +114,13 @@ void Storage::setNull(char *placeToRemove) {
         }
     }
 }
+
+void Storage::close() {
+    for(uint8_t shelf = 0; shelf < NUMBER_OF_SHELFS; shelf++) {
+        vector<Product *> temp;
+        for (uint8_t row = 0; row < ROWS_IN_SHELF; row++) {
+            temp.push_back(nullptr);
+        }
+        shelfs.push_back(temp);
+    }
+}

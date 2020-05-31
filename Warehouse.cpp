@@ -1,15 +1,23 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <ctime>
 #include "Warehouse.h"
 
 
-void Warehouse::addProduct(string _name, char *_expiryDate, char *_acceptanceDate, string _manufacturer, string _measurementUnit, float _quantity, float _price, string _description) {
+uint8_t Warehouse::addProduct(string _name, char *_expiryDate, char *_acceptanceDate, string _manufacturer, string _measurementUnit, float _quantity, float _price, string _description) {
 
-   // Input validation. Exclude commas from all strings.
+   // Input validation.
+    if (_name.find(',') != string::npos || _manufacturer.find(',') != string::npos || _measurementUnit.find(',') != string::npos || _description.find(',') != string::npos)
+        return 1;
+    if( strlen(_expiryDate)!=10 || _expiryDate[4]!='/' || _expiryDate[7]!='/')
+        return 2;
+    for (uint8_t i=0; i<10; i++)
+        if (_expiryDate[i] < '0' || _expiryDate[i] > '9')
+            if (_expiryDate[i] != '/')
+                return 2;
 
-
+    if (_quantity > 520000 || _quantity<0 || _price > 520000 || _price < 0)
+        return 3;
 
     Product product(_name, _expiryDate, _acceptanceDate, _manufacturer, _measurementUnit, _quantity, _price, _description);
 
@@ -53,8 +61,8 @@ void Warehouse::addProduct(string _name, char *_expiryDate, char *_acceptanceDat
             }
             break;
         }
-
     }
+    return 0;
 }
 
 void Warehouse::saveProducts(string file) {
@@ -85,6 +93,7 @@ void Warehouse::saveProducts() {
 
 void Warehouse::loadProducts(string file) {
     fileName = file;
+    printf("%s\n", file.c_str());
     string str;
     ifstream productFile(file);
 
@@ -250,4 +259,10 @@ void Warehouse::clean() {
             }
         }
     }
+}
+
+void Warehouse::close() {
+    products.clear();
+    fileName = "";
+    storage.close();
 }

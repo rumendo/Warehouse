@@ -38,6 +38,9 @@ public:
 
     // Sets storage sell to nullptr. Used for removing a product;
     void setNull(char*);
+
+    // Zeroize storage
+    void close();
 };
 
 

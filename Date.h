@@ -19,10 +19,6 @@ public:
     // Returns date is following format: yyyymmdd as integer.
     uint32_t getTimestamp();
 
-    uint16_t getYear();
-    uint8_t getMonth();
-    uint8_t getDay();
-
     /// Compares to another date.
     /// Returns integer:
     /// 1 - If compared date is closer to AD relative to the object called upon.

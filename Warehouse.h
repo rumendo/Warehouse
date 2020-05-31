@@ -18,12 +18,16 @@ public:
     // Adds products and saves a reference to them given the following rules:
     // A new product with a different expiration date that an already existing one is placed in a different location.
     // Products with matching names and expiration dates are placed in the same location if possible.
-    void addProduct(string, char*, char*, string, string, float, float, string);
+    uint8_t addProduct(string, char*, char*, string, string, float, float, string);
 
     // Removes a specified amount of a given product.
     void removeProduct(string, float);
 
+    // Clean up products due expiration dates or ones soon to be expired.
     void clean();
+
+    // Zeroize warehouse
+    void close();
 
     // Saves all products to a file with given name.
     void saveProducts(string);
