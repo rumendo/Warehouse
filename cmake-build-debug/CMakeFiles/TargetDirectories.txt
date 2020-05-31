@@ -1,0 +1,3 @@
+/home/rumen/CLionProjects/Warehouse/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/rumen/CLionProjects/Warehouse/cmake-build-debug/CMakeFiles/Warehouse.dir
+/home/rumen/CLionProjects/Warehouse/cmake-build-debug/CMakeFiles/edit_cache.dir

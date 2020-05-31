@@ -1,0 +1,1 @@
+/usr/bin/g++   -static-libstdc++ -static-libgcc -g   CMakeFiles/Warehouse.dir/main.cpp.o CMakeFiles/Warehouse.dir/Product.cpp.o CMakeFiles/Warehouse.dir/Date.cpp.o CMakeFiles/Warehouse.dir/Warehouse.cpp.o CMakeFiles/Warehouse.dir/Storage.cpp.o  -o Warehouse 
