@@ -38,9 +38,12 @@ public:
     string getCSV();
 
     string getName();
+    string getMU();
     uint32_t getExpiryDateTimestamp();
 
     float getQuantity();
+    void getDate(char*);
+    void getPlacement(char*);
     void setQuantity(float);
     void addQuantity(float);
     void setPlacement(char*);

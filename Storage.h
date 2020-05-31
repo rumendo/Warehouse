@@ -35,6 +35,9 @@ public:
 
     // Fills a char array with the locations an empty storage space.
     void getEmptyRow(char*);
+
+    // Sets storage sell to nullptr. Used for removing a product;
+    void setNull(char*);
 };
 
 

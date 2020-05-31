@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <ctime>
 #include "Warehouse.h"
 
 
@@ -133,10 +134,120 @@ void Warehouse::printInfo() {
     for (auto &product : products)
     {
         product.printInfo();
+        char place[6];
+        product.getPlacement(place);
         printf("\n");
     }
 }
 
 void Warehouse::printStorage() {
     storage.printStorage();
+}
+
+void Warehouse::removeProduct(string name, float quantity) {
+
+    // Check for product availability
+    float availability = 0.0;
+
+    for (auto &product : products) {
+        if (product.getName() == name)
+            availability += product.getQuantity();
+    }
+
+    if (availability == 0.0) {
+        printf("%s is out of stock.\n", name.c_str());
+        return;
+    }
+
+
+    // If requested quantity exceeds availability, customer is asked to make a decision.
+    if (availability < quantity) {
+        printf("We're in short supply of %s.\nWe have the following amount in storage:\n", name.c_str());
+        for (auto &product : products) {
+            if(product.getName() == name) {
+                char expiryDate[11];
+                product.getDate(expiryDate);
+                printf("%.2f %s %s with an expiration date of %s\n", product.getQuantity(), product.getMU().c_str(), product.getName().c_str(), expiryDate);
+            }
+        }
+        char response = 'n';
+        printf("Would you want what's left in stock? y/n: ");
+        cin >> response;
+        printf("\n");
+
+        if(response=='y'||response=='Y') {
+            this->removeProduct(name, availability);
+            quantity = 0.0;
+        } else return;
+    }
+
+    while (quantity != 0.0) {
+        uint32_t oldestExpiryDate = 42000000;
+        for (auto &product : products) {
+            if (product.getName() == name) {
+                if (product.getExpiryDateTimestamp() < oldestExpiryDate)
+                    oldestExpiryDate = product.getExpiryDateTimestamp();
+            }
+        }
+
+        uint16_t productToRemove = 0;
+        for (auto &product : products) {
+            if (product.getName() == name && product.getExpiryDateTimestamp() == oldestExpiryDate) {
+                if (product.getQuantity() > quantity) {
+                    char place[6];
+                    product.getPlacement(place);
+                    product.setQuantity(product.getQuantity()-quantity);
+                    printf("%.2f %s %s was removed from %s\n", quantity, product.getMU().c_str(), product.getName().c_str(), place);
+                    quantity = 0.0;
+                    break;
+                }else if(product.getQuantity() == quantity) {
+                    char place[6];
+                    product.getPlacement(place);
+                    printf("%.2f %s %s was removed from %s\n", quantity, product.getMU().c_str(), product.getName().c_str(), place);
+                    quantity = 0.0;
+                    storage.setNull(place);
+                    products.erase(products.begin() + productToRemove);
+                    break;
+                }else if(product.getQuantity() < quantity) {
+                    char place[6];
+                    product.getPlacement(place);
+                    quantity -= product.getQuantity();
+                    printf("%.2f %s %s was removed from %s\n", product.getQuantity(), product.getMU().c_str(), product.getName().c_str(), place);
+                    storage.setNull(place);
+                    products.erase(products.begin() + productToRemove);
+                    break;
+                }
+            }
+            productToRemove++;
+        }
+    }
+}
+
+void Warehouse::clean() {
+
+    printf("Cleanup started..\n");
+
+    time_t now = time(nullptr) + DAYS_TO_SPOIL * 24 * 60 * 60;
+    tm *timeNow = localtime(&now);
+    string time;
+
+    if(1 + timeNow->tm_mon < 10)
+        time += to_string(1900 + timeNow->tm_year) + '/' + '0' + to_string(1 + timeNow->tm_mon) + '/';
+    else
+        time += to_string(1900 + timeNow->tm_year) + '/' + to_string(1 + timeNow->tm_mon) + '/';
+
+    if (timeNow->tm_mday < 10)
+        time += '0' + to_string(timeNow->tm_mday);
+    else
+        time += to_string(timeNow->tm_mday);
+
+    Date spoilTime(time.c_str());
+
+    for(uint8_t i=0; i<10; i++) {
+        for (auto &product : products) {
+            if (spoilTime.getTimestamp() + DAYS_TO_SPOIL > product.getExpiryDateTimestamp()) {
+                this->removeProduct(product.getName(), product.getQuantity());
+            }
+        }
+    }
 }

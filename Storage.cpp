@@ -99,3 +99,18 @@ void Storage::getEmptyRow(char *placement) {
         shelf_number++;
     }
 }
+
+void Storage::setNull(char *placeToRemove) {
+    for(auto &shelf : shelfs) {
+        for(auto &row : shelf) {
+            if(row != nullptr) {
+                char place[6];
+                row->getPlacement(place);
+                if (!strcmp(placeToRemove, place)) {
+                    row = nullptr;
+                    return;
+                }
+            }
+        }
+    }
+}

@@ -76,3 +76,15 @@ void Product::setQuantity(float quantityToSet) {
 void Product::setPlacement(char *_placement) {
     strcpy(placement, _placement);
 }
+
+void Product::getDate(char *date) {
+    expiryDate.getDate(date);
+}
+
+string Product::getMU() {
+    return measurementUnit;
+}
+
+void Product::getPlacement(char *_placement) {
+    strcpy(_placement, placement);
+}

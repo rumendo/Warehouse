@@ -10,7 +10,6 @@ using namespace std;
 
 int main() {
 
-    Warehouse warehouse;
-
     return 0;
 }
+
